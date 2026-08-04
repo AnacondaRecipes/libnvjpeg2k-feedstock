@@ -138,13 +138,16 @@ about:
   license_file: LICENSE
   license: LicenseRef-NVIDIA-End-User-License-Agreement
   license_url: https://docs.nvidia.com/cuda/eula/index.html
+  license_family: OTHER
   summary: The nvJPEG2000 development package.
   description: >-
     The nvJPEG2000 library accelerates the decoding and encoding of JPEG2000 images on NVIDIA GPUs. The library is built on the CUDA platform and is supported on Pascal+ GPU architectures.
-
   doc_url: https://docs.nvidia.com/cuda/nvjpeg2000/
+  dev_url: https://docs.nvidia.com/cuda/nvjpeg2000/
 
 extra:
+  skip-lints:
+    - deprecate_license_url
   feedstock-name: libnvjpeg2k
   recipe-maintainers:
     - conda-forge/cuda
