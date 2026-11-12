@@ -1,16 +1,17 @@
 #!/bin/bash
+set -exuo pipefail
 
 # Install to conda style directories
-[[ -d lib64 ]] && mv lib64 lib
-mkdir -p ${PREFIX}/lib
-[[ -d pkg-config ]] && mv pkg-config ${PREFIX}/lib/pkgconfig
-[[ -d "$PREFIX/lib/pkgconfig" ]] && sed -E -i "s|cudaroot=.+|cudaroot=$PREFIX|g" $PREFIX/lib/pkgconfig/nvjpeg*.pc
+if [[ -d lib64 ]]; then
+    mv lib64 lib
+fi
+mkdir -p "${PREFIX}/lib"
 
-for i in `ls`; do
-    [[ $i == "build_env_setup.sh" ]] && continue
-    [[ $i == "conda_build.sh" ]] && continue
-    [[ $i == "metadata_conda_debug.yaml" ]] && continue
-    cp -rv $i ${PREFIX}
+for i in *; do
+    case "$i" in
+        build_env_setup.sh|conda_build.sh|metadata_conda_debug.yaml) continue ;;
+    esac
+    cp -rv "$i" "${PREFIX}"
 done
 
 check-glibc "$PREFIX"/lib*/*.so.* "$PREFIX"/bin/* "$PREFIX"/targets/*/lib*/*.so.* "$PREFIX"/targets/*/bin/*
